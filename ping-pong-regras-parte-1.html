@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<canvas id="folha" width="600" height="400"></canvas>
+		<script>
+			window.onload = function () {
+				setInterval(executar, 1000 / 30);
+			};
+
+			var posicaoBolaX = (posicaoBolaY = 10);
+			var velocidadeBolaPosicaoX = (velocidadeBolaPosicaoY = 10);
+
+			function executar() {
+				var folhaDesenho = document.getElementById('folha');
+				var areaDesenho = folhaDesenho.getContext('2d');
+
+				var larguraCampo = 600;
+				var alturaCampo = 400;
+				var espessuraRede = 5;
+
+				var diametroBola = 10;
+
+				areaDesenho.fillStyle = '#286047';
+				areaDesenho.fillRect(0, 0, larguraCampo, alturaCampo);
+
+				areaDesenho.fillStyle = '#ffffff';
+
+				// Linha
+				areaDesenho.fillRect(
+					larguraCampo / 2 - espessuraRede / 2,
+					0,
+					espessuraRede,
+					alturaCampo,
+				);
+
+				// Desenha a bola
+				areaDesenho.fillRect(
+					posicaoBolaX - diametroBola / 2,
+					posicaoBolaY - diametroBola / 2,
+					diametroBola,
+					diametroBola,
+				);
+
+				posicaoBolaX = posicaoBolaX + velocidadeBolaPosicaoX;
+				posicaoBolaY = posicaoBolaY + velocidadeBolaPosicaoY;
+
+				// Verifica a lateral superior
+				if (posicaoBolaY < 0 && velocidadeBolaPosicaoY < 0) {
+					velocidadeBolaPosicaoY = -velocidadeBolaPosicaoY;     // inverte o sinal da bola pois rebate
+				}
+
+				// Verifica a lateral inferior
+				if (posicaoBolaY > alturaCampo && velocidadeBolaPosicaoY > 0) {
+					velocidadeBolaPosicaoY = -velocidadeBolaPosicaoY;                 // inverte a posicao da bola para rebater
+				}
+			}
+		</script>
+	</body>
+</html>
